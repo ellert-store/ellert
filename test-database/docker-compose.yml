@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  database:
+    image: library/postgres:15
+    container_name: ellert-test-db
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: '123456'
+      POSTGRES_DB: 'postgres'
+    ports:
+      - "5435:5432"
