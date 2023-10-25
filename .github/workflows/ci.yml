@@ -32,6 +32,21 @@ jobs:
       - run: yarn build
   test:
     runs-on: ubuntu-22.04
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: 123456
+          POSTGRES_USER: postgres
+        ports:
+          - 5435:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     needs: Build
     name: Test
     steps:
