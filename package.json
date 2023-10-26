@@ -26,7 +26,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "",
+  "license": "AGPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/PDMLab/ts-node-prettier-vscode-starter/issues"
   },
