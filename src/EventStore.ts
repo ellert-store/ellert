@@ -7,4 +7,5 @@ export type EventStore<T extends Event> = {
     eventData: Event | Event[],
     options?: { expectedVersion?: number }
   ) => Promise<EventStream<T>>
+  getLastEvent: (streamId: string) => Promise<Event>
 }

@@ -2,6 +2,7 @@ import { Pool, PoolConfig } from 'pg'
 
 import { Event } from './Event'
 import { EventStore } from './EventStore'
+
 type PostgresEventStoreOptions = {
   poolConfig?: PoolConfig
 }
@@ -69,16 +70,21 @@ const PostgresEventStore = async <T extends Event>(
       const lastEvent = await this.getLastEvent(streamId)
       const version = lastEvent ? lastEvent.version : 0
 
-      const query = {
-        text: `INSERT INTO events(streamId, version, type, data, metadata, timestamp) VALUES($1, $2, $3, $4, $5, $6)`,
-        values: events.map((event, index) => [
+      const values = events
+        .map((event, index) => [
           streamId,
           version + index + 1,
           event.type,
           JSON.stringify(event.data),
           JSON.stringify(event.metadata),
-          event.timestamp
+          Date.now()
         ])
+        .join(',')
+        .split(',')
+
+      const query = {
+        text: `INSERT INTO events(streamId, version, type, data, metadata, timestamp) VALUES($1, $2, $3, $4, $5, $6)`,
+        values
       }
 
       await db.query(query)
