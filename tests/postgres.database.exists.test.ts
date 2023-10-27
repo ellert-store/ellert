@@ -1,7 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest'
-import createDatabase from '../src/postgres/create-database'
 import databaseExists from '../src/postgres/database-exists'
-import { Pool, PoolConfig } from 'pg'
+import { Pool } from 'pg'
 import {
   createTestDatabase,
   createTestDatabaseName,

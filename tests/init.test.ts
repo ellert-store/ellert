@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import Ellert from '../src/PostgresEventStore'
-import { Pool, PoolClient, PoolConfig } from 'pg'
+import { Pool, PoolClient } from 'pg'
 import { pgAdmin } from '../src/pg-admin'
 import {
   createTestDatabase,

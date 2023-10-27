@@ -21,6 +21,7 @@ type Projector = {
  * */
 const PostgresEventStore = async <T extends Event>(
   options: PostgresEventStoreOptions,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   projectors: Projector[] = []
 ): Promise<EventStore<T>> => {
   console.log('initializing event store')

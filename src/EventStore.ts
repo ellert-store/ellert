@@ -1,6 +1,6 @@
 import { Event } from './Event'
-import { EventStream } from './EventStream'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type EventStore<T extends Event> = {
   appendToStream: (
     streamId: string,
