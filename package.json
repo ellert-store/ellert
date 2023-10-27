@@ -1,7 +1,7 @@
 {
-  "name": "ts-node-prettier-vscode-starter",
+  "name": "ellert",
   "version": "0.0.0",
-  "description": "",
+  "description": "Ellert is an event store on top of Postgres for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
