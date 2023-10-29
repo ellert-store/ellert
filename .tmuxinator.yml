@@ -30,3 +30,12 @@ windows:
             - docker compose up -d
         - tests:
             - yarn test
+  - docs:
+     layout: even-vertical
+     panes:
+        - docs-build:
+            - printf '\033]2;%s\033\\' 'docs-build'
+            - yarn docs:dev
+        - docs:
+            - printf '\033]2;%s\033\\' 'docs'
+            - clear
