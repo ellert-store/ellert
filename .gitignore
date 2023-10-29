@@ -225,4 +225,10 @@ public/
 ### Project
 coverage
 dist
+
 ### End of Project
+
+### vitepress ###
+docs/.vitepress/dist
+docs/.vitepress/cache
+
