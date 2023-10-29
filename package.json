@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "ci": "yarn install --frozen-lockfile",
     "prerelease": "yarn build",
     "release": "standard-version",
     "test": "npx vitest --dir tests",
