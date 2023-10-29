@@ -1,18 +1,18 @@
-import { PoolClient } from 'pg'
+import { Pool } from 'pg'
 import dropDatabase from './postgres/drop-database'
 import createDatabase from './postgres/create-database'
 import databaseExists from './postgres/database-exists'
 
-export const pgAdmin = (db: PoolClient) => {
+export const pgAdmin = (db: Pool) => {
   return {
-    async createDatabase(databaseName: string) {
+    createDatabase: async function (databaseName: string) {
       await createDatabase(db, databaseName)
     },
-    async dropDatabase(table: string) {
-      await dropDatabase(db, table)
-    },
-    async databaseExists(db: PoolClient, databaseName: string) {
+    databaseExists: async function (db: Pool, databaseName: string) {
       return await databaseExists(db, databaseName)
+    },
+    dropDatabase: async function (table: string) {
+      await dropDatabase(db, table)
     }
   }
 }

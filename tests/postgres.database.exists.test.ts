@@ -10,7 +10,7 @@ import dropDatabase from '../src/postgres/drop-database'
 
 describe('pg', async () => {
   const config = getTestServerPoolConfig()
-  const db = await new Pool(config).connect()
+  const db = new Pool(config)
   const testDbName = await createTestDatabase(db)
 
   describe('when creating database', async () => {

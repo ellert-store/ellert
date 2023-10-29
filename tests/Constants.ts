@@ -1,4 +1,4 @@
-import { PoolClient, PoolConfig } from 'pg'
+import { Pool, PoolConfig } from 'pg'
 import createDatabase from '../src/postgres/create-database'
 
 export const StreamName = 'Test'
@@ -22,11 +22,10 @@ const getPoolConfig = (database: string): PoolConfig => {
 
 export const createTestDatabaseName = () => {
   const id = Math.random().toString(36).substring(7)
-  const databaseName = `test_db_${id}`
-  return databaseName
+  return `test_db_${id}`
 }
 
-export const createTestDatabase = async (db: PoolClient) => {
+export const createTestDatabase = async (db: Pool) => {
   const databaseName = createTestDatabaseName()
   await createDatabase(db, databaseName)
   return databaseName

@@ -2,6 +2,7 @@ import { Pool, PoolConfig } from 'pg'
 
 import { Event } from './Event'
 import { EventStore } from './EventStore'
+import { query } from './postgres/query'
 
 type PostgresEventStoreOptions = {
   poolConfig?: PoolConfig
@@ -27,10 +28,10 @@ const PostgresEventStore = async <T extends Event>(
   console.log('initializing event store')
 
   const pool = new Pool(options.poolConfig)
-  const db = await pool.connect()
 
-  await db.query(
-    `CREATE TABLE IF NOT EXISTS events (
+  await query(pool, async (client) => {
+    await client.query(
+      `CREATE TABLE IF NOT EXISTS events (
         id SERIAL PRIMARY KEY, 
         streamId VARCHAR(255), 
         version INT, 
@@ -38,34 +39,40 @@ const PostgresEventStore = async <T extends Event>(
         data JSONB, 
         metadata JSONB, 
         timestamp BIGINT
-  )`
-  )
+      )`
+    )
+  })
 
   const store = {
     readStream: async (streamId: string): Promise<Event[]> => {
-      const query = {
+      const queryString = {
         text: `SELECT * FROM events WHERE streamId = $1 ORDER BY version ASC`,
         values: [streamId]
       }
 
-      const { rows } = await db.query(query)
+      return await query(pool, async (client) => {
+        const { rows } = await client.query(queryString)
 
-      return rows.map((row) => ({
-        type: row.type,
-        data: row.data,
-        metadata: row.metadata,
-        timestamp: row.timestamp,
-        version: row.version
-      }))
+        return rows.map((row) => ({
+          type: row.type,
+          data: row.data,
+          metadata: row.metadata,
+          timestamp: row.timestamp,
+          version: row.version
+        }))
+      })
     },
     getLastEvent: async (streamId: string): Promise<Event> => {
-      const query = {
+      const queryString = {
         text: `SELECT * FROM events WHERE streamId = $1 ORDER BY version DESC LIMIT 1`,
         values: [streamId]
       }
-      const { rows } = await db.query<Event>(query)
 
-      return rows[0]
+      return await query(pool, async (client) => {
+        const { rows } = await client.query<Event>(queryString)
+
+        return rows[0]
+      })
     },
     async appendToStream(streamId: string, events: T[]): Promise<Event[]> {
       const lastEvent = await this.getLastEvent(streamId)
@@ -83,18 +90,19 @@ const PostgresEventStore = async <T extends Event>(
         .join(',')
         .split(',')
 
-      const query = {
+      const queryString = {
         text: `INSERT INTO events(streamId, version, type, data, metadata, timestamp) VALUES($1, $2, $3, $4, $5, $6)`,
         values
       }
 
-      await db.query(query)
-
-      return this.readStream(streamId)
+      return await query(pool, async (client) => {
+        await client.query(queryString)
+        return this.readStream(streamId)
+      })
     },
 
     release(): void {
-      db.release(true)
+      pool.end()
     }
   }
 

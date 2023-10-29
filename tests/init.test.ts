@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import Ellert from '../src/PostgresEventStore'
-import { Pool, PoolClient } from 'pg'
+import { Pool } from 'pg'
 import { pgAdmin } from '../src/pg-admin'
 import {
   createTestDatabase,
@@ -9,26 +9,23 @@ import {
 } from './Constants'
 
 describe('when creating event store instance', async () => {
-  let db: PoolClient = null
   let admin = null
   const poolConfig = getTestServerPoolConfig()
   const pool = new Pool(poolConfig)
-  db = await pool.connect()
-  const testDatabase = await createTestDatabase(db)
+  const testDatabase = await createTestDatabase(pool)
   const testPoolConfig = getTestDatabasePoolConfig(testDatabase)
+  const store = await Ellert({ poolConfig: testPoolConfig }, [])
 
   beforeEach(async () => {
-    admin = pgAdmin(db)
+    admin = pgAdmin(pool)
   })
 
   it('should be defined', async () => {
-    const store = await Ellert({ poolConfig: testPoolConfig }, [])
     expect(store).toBeDefined()
-    store.release()
   })
 
   afterEach(async () => {
+    store.release()
     await admin.dropDatabase(testDatabase)
-    db.release()
   })
 })
