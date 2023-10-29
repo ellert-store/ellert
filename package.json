@@ -1,6 +1,6 @@
 {
   "name": "ellert",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Ellert is an event store for Node.js on top of Postgres",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
