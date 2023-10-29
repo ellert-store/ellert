@@ -1,7 +1,7 @@
 {
   "name": "ellert",
   "version": "0.0.0",
-  "description": "Ellert is an event store on top of Postgres for Node.js",
+  "description": "Ellert is an event store for Node.js on top of Postgres",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
@@ -22,15 +22,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PDMLab/ts-node-prettier-vscode-starter.git"
+    "url": "git+https://github.com/ellert-store/ellert.git"
   },
-  "keywords": [],
+  "keywords": [
+    "postgres",
+    "eventstore",
+    "event-sourcing",
+    "typescript"
+  ],
   "author": "",
   "license": "AGPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/PDMLab/ts-node-prettier-vscode-starter/issues"
+    "url": "https://github.com/ellert-store/ellert/issues"
   },
-  "homepage": "https://github.com/PDMLab/ts-node-prettier-vscode-starter#readme",
+  "homepage": "https://github.com/ellert-store/ellert#readme",
   "devDependencies": {
     "@commitlint/cli": "18.2.0",
     "@commitlint/config-conventional": "18.1.0",
