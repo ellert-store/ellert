@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'ellert',
-  base: '/ellert/',
+  base: '/',
   description: 'Ellert is an open source Event Store on top of Postgres.',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
