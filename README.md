@@ -1,14 +1,54 @@
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org) 
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 [![Discord](https://img.shields.io/discord/1070453198000767076)](https://discord.gg/dKWyyv6M)
 <img src="https://img.shields.io/github/actions/workflow/status/pdmlab/ts-node-prettier-vscode-starter/ci.yml?branch=main" />
 
-# ts-node-prettier-vscode-starter
+# ellert store
+
+Ellert is an open source Event Store on top of Postgres.
+
+## Installation
+
+```bash
+npm install ellert
+```
+
+## Usage
+
+```typescript
+import Ellert from 'ellert';
+
+const poolConfig = {
+  host: "localhost",
+  port: 5432,
+  database: "postgres",
+  user: "postgres",
+  password: "123456"
+};
+
+const ellert = await Ellert({ poolConfig });
+
+const streamResult = await store.appendToStream("projectKickedOff", [
+  {
+    type: "projectKickedOff", data: {
+      title: "Ellert"
+    }, metadata: {}
+  }
+]);
+```
+
+## Why Ellert?
+
+Ernst Ellert is a fictional character from the German science fiction series [Perry Rhodan](https://www.perrypedia.de/). He is a mutant and a teletemporarian. Teletemporation is the ability to physically travel through time... and that's what we do with events.
 
 ## Want to help?
 
 This project is just getting off the ground and could use some help with cleaning things up and refactoring.
 
-If you want to contribute - we'd love it! Just open an issue to work against so you get full credit for your fork. You can open the issue first so we can discuss and you can work your fork as we go along.
+If you want to contribute - we'd love it! Just open an issue to work against, so you get full credit for your fork. You
+can open the issue first, so we can discuss, and you can work your fork as we go along.
+
+If you plan to distribute the code, keep the source code public to comply with AGPLv3. To clone in a private repository,
+acquire a commercial license.
 
 If you see a bug, please be so kind as to show how it's failing, and we'll do our best to get it fixed quickly.
 
@@ -16,16 +56,4 @@ Before sending a PR, please [create an issue](issues/new) to introduce your idea
 
 We're using [conventional commits](https://www.conventionalcommits.org), so please use it for your commits as well.
 
-Also please add tests and make sure to run `npm run lint-ts` or `yarn lint-ts`.
-
-## License
-
-MIT License
-
-Copyright (c) 2020 - 2021 PDMLab
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Also, please add tests and make sure to run `npm run lint-ts` or `yarn lint-ts`.
