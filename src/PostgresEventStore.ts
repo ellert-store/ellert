@@ -8,22 +8,19 @@ type PostgresEventStoreOptions = {
   poolConfig?: PoolConfig
 }
 
-type Projector = {
+export type StreamProjection = {
   projectionType: string
-  project<Projection, EventsOfStream extends Event>(
-    currentState: Partial<Projection>,
-    event: EventsOfStream
-  ): Partial<Projection>
+  project(currentState: Partial<Projection>, event: Event): Partial<Projection>
 }
 
 /**
  * @param options
- * @param {Projector[]} [projectors] - projections to be built
+ * @param {StreamProjection[]} [projectors] - projections to be built
  * */
 const PostgresEventStore = async <T extends Event>(
   options: PostgresEventStoreOptions,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  projectors: Projector[] = []
+  projectors: StreamProjection[] = []
 ): Promise<EventStore<T>> => {
   console.log('initializing event store')
 

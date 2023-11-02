@@ -1,28 +1,32 @@
 import { describe, expect, it } from 'vitest'
-import { Event } from '../src'
+import { Event, Projection } from '../src'
+import { StreamProjection } from '../src/PostgresEventStore'
 
 type ProjectKickedOffEvent = Event<`ProjectKickedOffEvent`, { name: string }>
 
-type Project = {
+type Project = Projection & {
   id: string
   name: string
 }
 
 type ProjectEvent = ProjectKickedOffEvent
 
-const projectProjection = (
-  currentState: Partial<Project>,
-  event: ProjectEvent
-): Partial<Project> => {
-  switch (event.type) {
-    case 'ProjectKickedOffEvent': {
-      return {
-        id: event.streamId,
-        name: event.data.name
+const ProjectProjection: StreamProjection = {
+  projectionType: 'Project',
+  project: (
+    currentState: Partial<Project>,
+    event: ProjectEvent
+  ): Partial<Project> => {
+    switch (event.type) {
+      case 'ProjectKickedOffEvent': {
+        return {
+          id: event.streamId,
+          name: event.data.name
+        }
       }
+      default:
+        return currentState
     }
-    default:
-      return currentState
   }
 }
 
@@ -37,7 +41,7 @@ describe('projection', (): void => {
         metadata: {}
       }
 
-      const project = projectProjection({}, event)
+      const project = ProjectProjection.project({}, event)
 
       expect(project).toBeDefined()
       expect(project.id).toBe(event.streamId)
