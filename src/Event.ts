@@ -12,7 +12,7 @@ export type Event<
   DataType extends EventData = EventData,
   MetadataType extends Metadata = Metadata
 > = {
-  _id?: string
+  id?: string
   version?: number
   streamId?: string
   timestamp?: number
