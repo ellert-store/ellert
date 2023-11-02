@@ -74,7 +74,10 @@ const PostgresEventStore = async <T extends Event>(
         return rows[0]
       })
     },
-    async appendToStream(streamId: string, events: T[]): Promise<Event[]> {
+    appendToStream: async function (
+      streamId: string,
+      events: T[]
+    ): Promise<Event[]> {
       const lastEvent = await this.getLastEvent(streamId)
       const version = lastEvent ? lastEvent.version : 0
 
